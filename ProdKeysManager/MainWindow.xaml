@@ -1,0 +1,164 @@
+﻿<Window
+    x:Class="ProdKeysManager.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ProdKeysManager"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="ProdKeys Manager"
+    Width="Auto"
+    Height="Auto"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    SizeToContent="Width"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <materialDesign:DialogHost DialogMargin="16" Identifier="MainDialogHost">
+        <Grid VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ToolBar
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <Button
+                    x:Name="SyncKeys"
+                    Padding="8"
+                    Click="SyncKeys_Click">
+                    Sync
+                </Button>
+                <Button
+                    x:Name="AddFile"
+                    Padding="8"
+                    Click="AddFile_Click">
+                    Manage Key File
+                </Button>
+                <Button
+                    x:Name="AddKey"
+                    Padding="8"
+                    Click="AddKey_Click">
+                    Add Key
+                </Button>
+                <Button
+                    x:Name="BatchAddKeys"
+                    Padding="8"
+                    Click="BatchAddKeys_Click">
+                    Batch Add Keys
+                </Button>
+            </ToolBar>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Orientation="Vertical">
+
+                <TextBlock
+                    Margin="8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="Black"
+                    Text="Managed Key Files" />
+                <ListView
+                    HorizontalContentAlignment="Stretch"
+                    ItemsSource="{Binding ManagedKeyFiles}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Name="RemoveFile"
+                                    Grid.Column="0"
+                                    Width="16"
+                                    Height="16"
+                                    Margin="8"
+                                    Padding="0"
+                                    VerticalContentAlignment="Center"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Click="RemoveFile_Click"
+                                    Content="×"
+                                    Foreground="Red" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    Text="{Binding .}"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <ListView
+                Name="KeyView"
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding ProdKeys}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Name="RemoveKey"
+                                        Grid.Column="0"
+                                        Width="16"
+                                        Height="16"
+                                        Padding="0"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Click="RemoveKey_Click"
+                                        Content="×"
+                                        Foreground="Red" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Click="KeyViewHeader_Click" Tag="KeyName">
+                                    Key Name
+                                </GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding KeyName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Click="KeyViewHeader_Click" Tag="KeyValue">
+                                    Key Value
+                                </GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding KeyValue}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </materialDesign:DialogHost>
+</Window>
