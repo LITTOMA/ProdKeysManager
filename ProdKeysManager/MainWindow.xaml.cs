@@ -8,6 +8,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -194,9 +195,13 @@ namespace ProdKeysManager
             }
         }
 
-        private void BatchAddKeys_Click(object sender, RoutedEventArgs e)
+        private async void BatchAddKeys_Click(object sender, RoutedEventArgs e)
         {
-
+            var prodKeys = (IList<ProdKeyItem>)await MaterialDesignThemes.Wpf.DialogHost.Show(new BatchAddKeysDialog(), "MainDialogHost");
+            if (prodKeys != null)
+            {
+                prodKeys.Where(k => !prodKeys.Any(p => p.KeyName == k.KeyName)).ToList().ForEach(k => ProdKeys.Add(k));
+            }
         }
 
         private void SyncKeys_Click(object sender, RoutedEventArgs e)
