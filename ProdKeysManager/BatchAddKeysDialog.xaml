@@ -26,11 +26,12 @@
             Margin="0,8,0,8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            materialDesign:HintAssist.Hint="Key name"
             materialDesign:TextFieldAssist.UnderlineBrush="BlueViolet"
             AcceptsReturn="True"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <materialDesign:HintAssist.Hint>key_1 = abcdef0123...</materialDesign:HintAssist.Hint>
+        </TextBox>
 
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <Button
