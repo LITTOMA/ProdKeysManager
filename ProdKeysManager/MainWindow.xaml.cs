@@ -24,6 +24,8 @@ namespace ProdKeysManager
         private ObservableCollection<string> managedKeyFiles = new ObservableCollection<string>();
         private GridViewColumnHeader listViewSortCol;
         private ListSortDirection listViewSortDir;
+        private bool isEditingKeys;
+        private bool isEditingFiles;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -37,6 +39,18 @@ namespace ProdKeysManager
         {
             get => managedKeyFiles;
             set => SetProperty(ref managedKeyFiles, value);
+        }
+
+        public bool IsEditingKeys
+        {
+            get => isEditingKeys;
+            set => SetProperty(ref isEditingKeys, value);
+        }
+
+        public bool IsEditingFiles
+        {
+            get => isEditingFiles;
+            set => SetProperty(ref isEditingFiles, value);
         }
 
         public MainWindow()
@@ -225,6 +239,12 @@ namespace ProdKeysManager
             listViewSortCol = column;
             listViewSortDir = newDir;
             KeyView.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEditingFiles = !this.IsEditingFiles;
+            this.IsEditingKeys = !this.IsEditingKeys;
         }
     }
 

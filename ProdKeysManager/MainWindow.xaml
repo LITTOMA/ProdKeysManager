@@ -57,6 +57,12 @@
                     Click="BatchAddKeys_Click">
                     Batch Add Keys
                 </Button>
+                <Button
+                    x:Name="Edit"
+                    Padding="8"
+                    Click="Edit_Click">
+                    Edit
+                </Button>
             </ToolBar>
 
             <StackPanel
@@ -94,7 +100,8 @@
                                     BorderBrush="Transparent"
                                     Click="RemoveFile_Click"
                                     Content="×"
-                                    Foreground="Red" />
+                                    Foreground="Red"
+                                    Visibility="{Binding Path=IsEditingFiles, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 <TextBlock
                                     Grid.Column="1"
                                     HorizontalAlignment="Stretch"
@@ -128,7 +135,8 @@
                                         BorderBrush="Transparent"
                                         Click="RemoveKey_Click"
                                         Content="×"
-                                        Foreground="Red" />
+                                        Foreground="Red"
+                                        Visibility="{Binding Path=IsEditingKeys, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
