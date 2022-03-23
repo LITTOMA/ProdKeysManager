@@ -44,5 +44,17 @@ namespace ProdKeysManager.Properties {
                 this["ProdKeys"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableSensitiveMode {
+            get {
+                return ((bool)(this["EnableSensitiveMode"]));
+            }
+            set {
+                this["EnableSensitiveMode"] = value;
+            }
+        }
     }
 }

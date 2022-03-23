@@ -18,6 +18,9 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <Window.Resources>
+        <local:SensitiveTextConverter x:Key="sensitive" />
+    </Window.Resources>
     <materialDesign:DialogHost DialogMargin="16" Identifier="MainDialogHost">
         <Grid VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -105,7 +108,7 @@
                                 <TextBlock
                                     Grid.Column="1"
                                     HorizontalAlignment="Stretch"
-                                    Text="{Binding .}"
+                                    Text="{Binding Path=., Converter={StaticResource sensitive}}"
                                     TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>
@@ -160,7 +163,7 @@
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding KeyValue}" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding KeyValue, Converter={StaticResource sensitive}}" TextWrapping="Wrap" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
