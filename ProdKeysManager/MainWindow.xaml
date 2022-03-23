@@ -11,6 +11,7 @@
     Height="Auto"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
+    KeyDown="Window_KeyDown"
     SizeToContent="Width"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"

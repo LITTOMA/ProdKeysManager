@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ProdKeysManager
 {
@@ -245,6 +246,44 @@ namespace ProdKeysManager
         {
             this.IsEditingFiles = !this.IsEditingFiles;
             this.IsEditingKeys = !this.IsEditingKeys;
+        }
+
+        static readonly Key[] HotKeysForSensitiveMode = { Key.Up, Key.Up, Key.Down, Key.Down, Key.Left, Key.Right, Key.Left, Key.Right, Key.B, Key.A };
+        List<Key> triggerBuffer = new List<Key>(HotKeysForSensitiveMode);
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == triggerBuffer[0])
+            {
+                triggerBuffer.RemoveAt(0);
+                if (triggerBuffer.Count == 0)
+                {
+                    Properties.Settings.Default.EnableSensitiveMode = !Properties.Settings.Default.EnableSensitiveMode;
+                    Properties.Settings.Default.Save();
+                    MainWindow newWindow = new MainWindow();
+                    Application.Current.MainWindow = newWindow;
+                    newWindow.Left = this.Left;
+                    newWindow.Top = this.Top;
+                    newWindow.Show();
+                    this.Close();
+                    triggerBuffer.AddRange(HotKeysForSensitiveMode);
+                }
+            }
+            else
+            {
+                triggerBuffer.Clear();
+                triggerBuffer.AddRange(HotKeysForSensitiveMode);
+            }
+        }
+
+        private void RaiseAllPropertiesChanged()
+        {
+            // get all properties
+            var properties = this.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                // raise property changed
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property.Name));
+            }
         }
     }
 
