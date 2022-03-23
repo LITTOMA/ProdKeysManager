@@ -22,7 +22,7 @@ jobs:
       run: |
         cd ProdKeysManager
         dotnet restore
-        msbuild /p:platform="Any CPU" /p:configuration="Release"
+        msbuild /p:Configuration=Release /p:Platform=AnyCPU
         cd ..
     - name: upload artifact
       uses: actions/upload-artifact@v1.0.0
