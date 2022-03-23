@@ -15,13 +15,12 @@ jobs:
     - name: setup msbuild
       uses: microsoft/setup-msbuild@v1
       
-    - name: setup dotnet
-      uses: actions/setup-dotnet@v1
+    - uses: nuget/setup-nuget@v1
+    - run: nuget restore ProdKeysManager.sln
 
     - name: build
       run: |
         cd ProdKeysManager
-        dotnet restore
         msbuild /p:Configuration=Release /p:Platform=AnyCPU
         cd ..
     - name: upload artifact
