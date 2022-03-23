@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,8 @@ namespace ProdKeysManager
         private ListSortDirection listViewSortDir;
         private bool isEditingKeys;
         private bool isEditingFiles;
+        private SnackbarMessageQueue snackBarMessageQueue;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -93,6 +96,9 @@ namespace ProdKeysManager
             {
                 SaveProdKeys();
             };
+
+            snackBarMessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(3), Dispatcher);
+            Notification.MessageQueue = snackBarMessageQueue;
         }
 
         private void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
@@ -222,6 +228,7 @@ namespace ProdKeysManager
         private void SyncKeys_Click(object sender, RoutedEventArgs e)
         {
             UpdateAllManagedKeyFiles();
+            snackBarMessageQueue.Enqueue("Done!");
         }
 
         private void KeyViewHeader_Click(object sender, RoutedEventArgs e)
@@ -265,24 +272,12 @@ namespace ProdKeysManager
                     newWindow.Top = this.Top;
                     newWindow.Show();
                     this.Close();
-                    triggerBuffer.AddRange(HotKeysForSensitiveMode);
                 }
             }
             else
             {
                 triggerBuffer.Clear();
                 triggerBuffer.AddRange(HotKeysForSensitiveMode);
-            }
-        }
-
-        private void RaiseAllPropertiesChanged()
-        {
-            // get all properties
-            var properties = this.GetType().GetProperties();
-            foreach (var property in properties)
-            {
-                // raise property changed
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property.Name));
             }
         }
     }

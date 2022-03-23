@@ -171,6 +171,12 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+
+            <materialDesign:Snackbar
+                x:Name="Notification"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                IsActive="False" />
         </Grid>
     </materialDesign:DialogHost>
 </Window>
