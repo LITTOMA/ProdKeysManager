@@ -1,0 +1,30 @@
+name: Build on push
+
+on:
+  push:
+    branches: master
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v2
+      
+    - name: setup msbuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - uses: nuget/setup-nuget@v1
+    - run: nuget restore ProdKeysManager.sln
+
+    - name: build
+      run: |
+        cd ProdKeysManager
+        msbuild /p:Configuration=Release /p:Platform=AnyCPU
+        cd ..
+    - name: upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: ProdKeysManager
+        path: ProdKeysManager/bin/Release
